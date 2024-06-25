@@ -1,0 +1,55 @@
+#include <stdio.h>
+
+int main() {
+  // Define drink prices (adjust as needed)
+  float coke_price = 1.00;
+  float juice_price = 1.50;
+
+  // Variables for user input and calculations
+  int choice, inserted_money = 0;
+  float change;
+
+  // Welcome message
+  printf("Welcome to the Vending Machine!\n");
+
+  while (1) {
+    // Display menu
+    printf("\nDrinks:\n");
+    printf("1. Coke ($%.2f)\n", coke_price);
+    printf("2. Juice ($%.2f)\n", juice_price);
+    printf("3. Exit\n");
+    printf("Enter your choice: ");
+    scanf("%d", &choice);
+
+    // Handle user selection
+    switch (choice) {
+      case 1:
+      case 2:
+        printf("You selected ");
+        if (choice == 1) {
+          printf("Coke ($%.2f).\n", coke_price);
+        } else {
+          printf("Juice ($%.2f).\n", juice_price);
+        }
+
+        // Loop for money insertion
+        while (inserted_money < (choice == 1 ? coke_price : juice_price)) {
+          printf("Insert money (minimum $%.2f): ", (choice == 1 ? coke_price : juice_price) - inserted_money);
+          scanf("%d", &inserted_money);
+        }
+
+        // Calculate and display change
+        change = inserted_money - (choice == 1 ? coke_price : juice_price);
+        printf("Thank you! Please take your drink and your change ($%.2f).\n", change);
+        inserted_money = 0; // Reset inserted money for next purchase
+        break;
+      case 3:
+        printf("Thank you for using the Vending Machine!\n");
+        return 0; // Exit loop
+      default:
+        printf("Invalid choice. Please try again.\n");
+    }
+  }
+
+  return 0;
+}
