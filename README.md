@@ -87,9 +87,9 @@ LOOP FUNCTION
 
         
         CODE IN LEAFPAD 
-        ![image](https://github.com/sahana09012004/TASK-1-/assets/150324046/20df5fb5-4220-4372-96d5-38b4a37c8766)
-        OUTPUT 
-       ![image](https://github.com/sahana09012004/TASK-1-/assets/150324046/ee05badf-74e2-42e6-b1cf-304905811e93)
+        ![image](https://github.com/sahana09012004/TASK-1-/assets/150324046/6c839ad0-6755-4e22-96e6-b5d3098fa6d3)
+![image](https://github.com/sahana09012004/TASK-1-/assets/150324046/9d589350-c651-4d7a-b5be-fef8af054cd2)
+
 
 TASK 3 
 SPIKE Simulation 
