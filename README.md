@@ -94,6 +94,14 @@ LOOP FUNCTION
 
 
 TASK 3 
+Verification with Optimization Levels:
+
+Verify the program's behavior with two different levels of optimization:
+
+-O1: This optimization level enables basic optimizations that improve performance without significantly increasing compilation time.
+
+-Ofast: This level enables aggressive optimizations, potentially breaking strict standards compliance for maximum performance.
+
 SPIKE Simulation 
 ![image](https://github.com/sahana09012004/TASK-1-/assets/150324046/c91baf0b-1a80-46cc-9fe4-f248b2b0ea86)
 ![image](https://github.com/sahana09012004/TASK-1-/assets/150324046/b709256c-b0a8-49c6-b2ab-c373178fe03f)
@@ -101,6 +109,8 @@ SPIKE Simulation
 
 
 OUTPUT IN RISC-V
+debug command riscv64-unknown-elf-objdump -d ticketterminal.o |less
+
 ![image](https://github.com/sahana09012004/TASK-1-/assets/150324046/bf1f5c46-44e0-44e5-a1d7-b9052d71cbee)
 ![image](https://github.com/sahana09012004/TASK-1-/assets/150324046/6f9d35cd-7d44-4283-a1d4-8f48d4efd2bc)
 ![image](https://github.com/sahana09012004/TASK-1-/assets/150324046/40a2c21e-e6fe-4d29-88e8-4ec0d1a69e46)
