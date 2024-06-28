@@ -87,7 +87,9 @@ LOOP FUNCTION
 
         
         CODE IN LEAFPAD 
-        ![image](https://github.com/sahana09012004/TASK-1-/assets/150324046/6c839ad0-6755-4e22-96e6-b5d3098fa6d3)
+![c program in leafpad](https://github.com/sahana09012004/TASK-1-/assets/150324046/80828039-3426-4e9e-bd41-62d0f498ca2f)
+
+
 ![image](https://github.com/sahana09012004/TASK-1-/assets/150324046/9d589350-c651-4d7a-b5be-fef8af054cd2)
 
 
