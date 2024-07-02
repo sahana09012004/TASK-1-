@@ -127,8 +127,11 @@ Identify various RISC-V instruction type (R, I, S, B, U, J) and exact 32-bit ins
 
 INSTRUCTIONS:
      ADD r1, r2, r3
+     
      SUB r3, r1, r2
+     
      AND r2, r1, r3
+     
      OR r8, r2, r5
      XOR r8, r1, r4
      SLT r10, r2, r4
