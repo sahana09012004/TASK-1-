@@ -117,6 +117,117 @@ debug command riscv64-unknown-elf-objdump -d ticketterminal.o |less
 
 
 Hence the output in both spike and RISC-V is verfied.
+TASK 4 
+Identify various RISC-V instruction type (R, I, S, B, U, J) and exact 32-bit instruction code in the instruction type format for below RISC-V instructions.
+
+
+INSTRUCTIONS:
+     ADD r1, r2, r3
+     SUB r3, r1, r2
+     AND r2, r1, r3
+     OR r8, r2, r5
+     XOR r8, r1, r4
+     SLT r10, r2, r4
+     ADDI r12, r3, 5
+     SW r3, r1, 4
+     SRL r16, r11, r2
+     BNE r0, r1, 20
+     BEQ r0, r0, 15
+     LW r13, r11, 2
+     SLL r15, r11, r2
+Upload the 32-bit pattern on Github.
+
+RISC-V is an open standard Instruction Set Architecture (ISA) that uses a modular design, allowing for a simple and scalable instruction set. Here are the main instruction types in RISC-V:
+
+1. R-Type (Register Type)  *_Purpose_: Used for arithmetic and logical operations.
+  *_Format_: 31   25 24  20 19  15 14  12 11   7 6   0.
+             funct7 rs2 rs1 funct3 rd   opcode.
+  *_opcode_: Operation code, specifies the operation to be performed.
+  *_rs1, rs2_: Source registers.
+  *_rd_: Destination register.
+  *_funct3, funct7_: Function fields, provide more specificity for the operation.
+  *_Efficiency_:*Uses only registers, which are faster to access compared to memory.
+                *Allows for complex arithmetic and logical operations without memory access overhead.
+  *_Flexibility_:*Supports a wide range of operations (e.g., addition, subtraction, bitwise operations).
+                 *Function fields (funct3, funct7) allow for many operations to be encoded in a compact format.
+   ADD r1, r2, r3:
+      *_funct7 (7 bits)_: 0000000.
+   *_rs2 (5 bits)_: 00011.
+   *_rs1 (5 bits)_: 00010.
+   *_funct3 (3 bits)_: 000.
+   *_rd (5 bits)_: 00001.
+   *_opcode (7 bits)_: 0110011.
+   *_32 bit binary patterns_:
+           0000000 00011 00010 000 00001 0110011.
+   XOR r8, r1, r4:
+      *_funct7 (7 bits)_: 0000000.
+   *_rs2 (5 bits)_: 00100.
+   *_rs1 (5 bits)_: 00001.
+   *_funct3 (3 bits)_: 100.
+   *_rd (5 bits)_: 01000.
+   *_opcode (7 bits)_: 0110011.
+   *_32-bit binary patterns_:
+            0000000 00100 00001 100 01000 0110011.
+2.I-Type (Immediate) Instructions:
+
+In the RISC-V architecture, I-type instructions are mostly used for operations using instantaneous values, which are constants that are integrated into the instruction itself. These instructions can load data from memory, carry out arithmetic operations, and apply instantaneous values to different types of calculations. They play a crucial role in streamlining code that often has to employ constants, allowing for effective data manipulation without the need for extra load instructions.
+
+I-type instructions improve efficiency and code density by eliminating the need for many instructions to complete a single job, therefore streamlining processes. Because load instructions enable data to be retrieved directly into registers from memory, they are also essential for efficient memory access. All things considered, I-Type instructions greatly increase the RISC-V instruction's adaptability and efficiency.
+
+   *_Purpose_: Used for operations involving a constant (immediate) value and for load instructions.
+   *_Format_: 31     20 19  15 14  12 11   7 6 0.
+              immediate rs1 funct3 rd   opcode.
+   *_opcode_: Operation code.
+   *_rs1_: Source register.
+   *_rd_: Destination register.
+   *_funct3: Function field.
+   *_immediate_: 12-bit immediate value.
+   *_Efficiency_:*Combines a register and an immediate value, reducing the need for additional instructions to load constants.
+                 *Immediate values are embedded within the instruction, allowing quick access and reducing memory usage.
+   *_Flexibility_:*Useful for arithmetic operations with constants and for load  instructions.
+           *Supports operations like immediate addition, bit shifts, and load from memory.
+
+  ADDI r12, r3, 5
+     *_immediate (12 bits)_: 000000000101.
+   *_rs1 (5 bits)_: 00011.
+   *_funct3 (3 bits)_: 000.
+   *_rd (5 bits)_: 01100.
+   *_opcode (7 bits)_: 0010011.
+   *_32-bit binary patterns_:
+            000000000101 00011 000 01100 0010011.
+  3.S-Type (Store) Instructions:
+
+S-type instructions are used for storing data from a register to memory. The immediate value is split between two fields for encoding purposes. S-Type instructions in RISC-V are primarily used for storing data from a register to memory. These instructions are essential for memory operations where data needs to be written to a specific memory address.
+
+The S-Type instructions work by taking the contents of a source register and storing it at a memory address computed from a base register plus an immediate offset. This immediate offset allows for flexible addressing modes, enabling access to different memory locations relative to the base address.
+
+The typical operations in this category include SW (Store Word), SH (Store Halfword), and SB (Store Byte), which store 32-bit, 16-bit, and 8-bit values, respectively. S-type instructions play a crucial role in efficient data handling and manipulation, ensuring that the CPU can interact with memory effectively for various computational tasks and real-world applications.
+SW r3, r1, 4
+  *_immediate (12 bits)_: 000000000100 (split as 7 and 5 bits).
+  *_rs2 (5 bits)_: 00011.
+  *_rs1 (5 bits)_: 00001.
+  *_funct3 (3 bits)_: 010.
+  *_opcode (7 bits)_: 0100011.
+  *_32-bit binary patterns_:
+           0000000 00011 00001 010 00010 0100011.
+  32-bit binary patterns:
+  *_ADD  r1, r2, r3_: 00000000001100010000000010110011.
+  *_SUB  r3, r1, r2_: 01000000001000001000000110110011.
+  *_AND  r2, r1, r3_: 00000000001100001111000010010011.
+  *_OR   r8, r2, r5_: 00000000010100010110000100010011.
+  *_XOR  r8, r1, r4_: 00000000010000001100000100010011.
+  *_SLT  r10, r2, r4_: 00000000010000010101000101010011.
+  *_ADDI r12, r3, 5_: 00000000010100010000001100010011.
+  *_SW   r3, r1, 4_: 00000000001100001010001000110011.
+  *_SRL  r16, r11, r2_: 00000000001001011101000000110011.
+  *_BNE  r0, r1, 20_: 00000000001000000000100101100011.
+  *_BEQ  r0, r0, 15_: 00000000000000000000011111100011.
+  *_LW   r13, r11, 2_: 00000000001001011010001100100011.
+  *_SLL  r15, r11, r2_: 00000000001001011000001111010011.
+These binary patterns represent the 32-bit encoded instructions for each of the specified RISC-V instructions.
+
+
+   
 
 
 
