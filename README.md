@@ -144,9 +144,9 @@ Upload the 32-bit pattern on Github.
 RISC-V is an open standard Instruction Set Architecture (ISA) that uses a modular design, allowing for a simple and scalable instruction set. Here are the main instruction types in RISC-V:
 
 1. R-Type (Register Type)  *_Purpose_: Used for arithmetic and logical operations.
-  *_Format_: 31   25 24  20 19  15 14  12 11   7 6   0.
+  Format_: 31   25 24  20 19  15 14  12 11   7 6   0.
              funct7 rs2 rs1 funct3 rd   opcode.
-  *_opcode_: Operation code, specifies the operation to be performed.
+  opcode_: Operation code, specifies the operation to be performed.
   *_rs1, rs2_: Source registers.
   *_rd_: Destination register.
   *_funct3, funct7_: Function fields, provide more specificity for the operation.
