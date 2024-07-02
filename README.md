@@ -117,6 +117,10 @@ debug command riscv64-unknown-elf-objdump -d ticketterminal.o |less
 
 
 Hence the output in both spike and RISC-V is verfied.
+
+
+
+
 TASK 4 
 Identify various RISC-V instruction type (R, I, S, B, U, J) and exact 32-bit instruction code in the instruction type format for below RISC-V instructions.
 
@@ -159,6 +163,10 @@ RISC-V is an open standard Instruction Set Architecture (ISA) that uses a modula
    *_opcode (7 bits)_: 0110011.
    *_32 bit binary patterns_:
            0000000 00011 00010 000 00001 0110011.
+
+
+
+
    XOR r8, r1, r4:
       *_funct7 (7 bits)_: 0000000.
    *_rs2 (5 bits)_: 00100.
@@ -168,6 +176,10 @@ RISC-V is an open standard Instruction Set Architecture (ISA) that uses a modula
    *_opcode (7 bits)_: 0110011.
    *_32-bit binary patterns_:
             0000000 00100 00001 100 01000 0110011.
+
+
+
+
 2.I-Type (Immediate) Instructions:
 
 In the RISC-V architecture, I-type instructions are mostly used for operations using instantaneous values, which are constants that are integrated into the instruction itself. These instructions can load data from memory, carry out arithmetic operations, and apply instantaneous values to different types of calculations. They play a crucial role in streamlining code that often has to employ constants, allowing for effective data manipulation without the need for extra load instructions.
@@ -187,6 +199,8 @@ I-type instructions improve efficiency and code density by eliminating the need 
    *_Flexibility_:*Useful for arithmetic operations with constants and for load  instructions.
            *Supports operations like immediate addition, bit shifts, and load from memory.
 
+  
+  
   ADDI r12, r3, 5
      *_immediate (12 bits)_: 000000000101.
    *_rs1 (5 bits)_: 00011.
@@ -195,7 +209,12 @@ I-type instructions improve efficiency and code density by eliminating the need 
    *_opcode (7 bits)_: 0010011.
    *_32-bit binary patterns_:
             000000000101 00011 000 01100 0010011.
-  3.S-Type (Store) Instructions:
+  
+  
+  
+  
+  
+3.S-Type (Store) Instructions:
 
 S-type instructions are used for storing data from a register to memory. The immediate value is split between two fields for encoding purposes. S-Type instructions in RISC-V are primarily used for storing data from a register to memory. These instructions are essential for memory operations where data needs to be written to a specific memory address.
 
@@ -210,6 +229,12 @@ SW r3, r1, 4
   *_opcode (7 bits)_: 0100011.
   *_32-bit binary patterns_:
            0000000 00011 00001 010 00010 0100011.
+  
+  
+  
+  
+  
+  
   32-bit binary patterns:
   *_ADD  r1, r2, r3_: 00000000001100010000000010110011.
   *_SUB  r3, r1, r2_: 01000000001000001000000110110011.
