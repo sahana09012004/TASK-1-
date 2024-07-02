@@ -149,22 +149,31 @@ RISC-V is an open standard Instruction Set Architecture (ISA) that uses a modula
 1. R-Type (Register Type)  *_Purpose_: Used for arithmetic and logical operations.
   Format_: 31   25 24  20 19  15 14  12 11   7 6   0.
              funct7 rs2 rs1 funct3 rd   opcode.
+   
   opcode_: Operation code, specifies the operation to be performed.
-  *_rs1, rs2_: Source registers.
-  *_rd_: Destination register.
-  *_funct3, funct7_: Function fields, provide more specificity for the operation.
-  *_Efficiency_:*Uses only registers, which are faster to access compared to memory.
+  
+  rs1, rs2_: Source registers.
+  
+  rd_: Destination register.
+  funct3, funct7_: Function fields, provide more specificity for the operation.
+  Efficiency_:*Uses only registers, which are faster to access compared to memory.
                 *Allows for complex arithmetic and logical operations without memory access overhead.
-  *_Flexibility_:*Supports a wide range of operations (e.g., addition, subtraction, bitwise operations).
+
+              
+  Flexibility_:*Supports a wide range of operations (e.g., addition, subtraction, bitwise operations).
                  *Function fields (funct3, funct7) allow for many operations to be encoded in a compact format.
    ADD r1, r2, r3:
-      *_funct7 (7 bits)_: 0000000.
-   *_rs2 (5 bits)_: 00011.
-   *_rs1 (5 bits)_: 00010.
-   *_funct3 (3 bits)_: 000.
-   *_rd (5 bits)_: 00001.
-   *_opcode (7 bits)_: 0110011.
-   *_32 bit binary patterns_:
+    funct7 (7 bits)_: 0000000.
+    
+   rs2 (5 bits)_: 00011.
+   
+   rs1 (5 bits)_: 00010.
+   
+   funct3 (3 bits)_: 000.
+   
+   rd (5 bits)_: 00001.
+   opcode (7 bits)_: 0110011.
+   32 bit binary patterns_:
            0000000 00011 00010 000 00001 0110011.
 
 
