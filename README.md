@@ -331,6 +331,9 @@ I have developed a set of commands and achieved the desired output for my projec
 In this task we will obtain the waveform for RISC-V using Verilog Code and Verilog Testbench
 
 ![image](https://github.com/sahana09012004/TASK-1-/assets/150324046/1fca4a0f-1840-412b-82dc-4e2690a33a1a)
+
+
+
 OUTPUT 
 1. ADD (r1,r2,r3)
    ![image](https://github.com/sahana09012004/TASK-1-/assets/150324046/e2128b27-0ba9-42b8-89ac-1436e4210d73)
