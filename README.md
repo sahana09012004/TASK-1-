@@ -325,6 +325,30 @@ SW r3, r1, 4
   
 These binary patterns represent the 32-bit encoded instructions for each of the specified RISC-V instructions.
 
+TASK 5 
+RISC-V Core Verilog netlist and Testbench for Functional simulation
+I have developed a set of commands and achieved the desired output for my project. This was accomplished by referece above and the key sources, which provided valuable guidance and examples. These references were in understanding the required techniques and applying them effectively in my implementation.
+In this task we will obtain the waveform for RISC-V using Verilog Code and Verilog Testbench
+
+![image](https://github.com/sahana09012004/TASK-1-/assets/150324046/1fca4a0f-1840-412b-82dc-4e2690a33a1a)
+OUTPUT 
+1. ADD (r1,r2,r3)
+   ![image](https://github.com/sahana09012004/TASK-1-/assets/150324046/e2128b27-0ba9-42b8-89ac-1436e4210d73)
+2. SUB (r3,r1,r2)
+![image](https://github.com/sahana09012004/TASK-1-/assets/150324046/011df5bf-8775-41b3-94cb-4368c363e460)
+3.OR (r8,r2,r5)
+![image](https://github.com/sahana09012004/TASK-1-/assets/150324046/74e7c14d-e34b-4687-a3b6-55e647bce44a)
+4.XOR (r8,r1,r4)
+![image](https://github.com/sahana09012004/TASK-1-/assets/150324046/7f93c126-7f67-40cd-8244-759709b464f4)
+5.BEQ (r0,r0,15)
+![image](https://github.com/sahana09012004/TASK-1-/assets/150324046/4c9ce01b-fe2e-4084-8611-0413d558e862)
+6.SLL (r15,r11,r2)
+![image](https://github.com/sahana09012004/TASK-1-/assets/150324046/748ad86f-08e2-4daa-82a6-b6ecd57178b3)
+7.BNE (r0,r1,20)
+![image](https://github.com/sahana09012004/TASK-1-/assets/150324046/19f53256-5bbf-49a3-8ddd-3b3aee0b415a)
+8.GTKWAVE WINDOW
+![image](https://github.com/sahana09012004/TASK-1-/assets/150324046/baf78d7f-735d-42e3-a38f-b9754e382ed8)
+
 
    
 
