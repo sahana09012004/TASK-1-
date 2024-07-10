@@ -358,11 +358,17 @@ Using the VSDsquadron mini board, the Vending Machine project simulates the oper
 
 COMPONENTS FOR VENDING MACHINE 
 1.VSDsquadron Mini Board
+
 2.Buttons
+
 3.LEDs
+
 4.Breadboard
+
 5.Connecting Wires
+
 6.Coin dispenser module
+
 Corresponding Pins 
 VCC- 5V pin 
 GND - GND pin 
@@ -375,9 +381,7 @@ PROGRAM
 #include <string>
 #include <chrono>
 #include <thread>
-
 using namespace std;
-
 // Simulated GPIO Pins (for demonstration purposes)
 class GPIO {
 public:
@@ -391,19 +395,16 @@ public:
         cout << "Output activated on pin " << pin << endl;
     }
 };
-
 // Product struct to hold information about each product
 struct Product {
     string name;
     double price;
     int quantity;
 };
-
 // VendingMachine class to manage the vending machine operations
 class VendingMachine {
 private:
     vector<Product> products; // Vector to store products
-
 public:
     // Constructor to initialize the vending machine with products
     VendingMachine() {
@@ -416,8 +417,7 @@ public:
             // Add more products as needed
         };
     }
-
-    // Function to display the products available
+  // Function to display the products available
     void displayProducts() {
         cout << "===== Available Products =====" << endl;
         cout << "No.  Name         Price  Quantity" << endl;
@@ -429,15 +429,13 @@ public:
         }
         cout << endl;
     }
-
     // Function to process a purchase
     void purchaseProduct(int choice, double &balance) {
         if (choice < 1 || choice > products.size()) {
             cout << "Invalid selection. Please try again." << endl;
             return;
         }
-
-        int index = choice - 1;
+       int index = choice - 1;
         if (products[index].quantity <= 0) {
             cout << "Sorry, " << products[index].name << " is out of stock." << endl;
         } else if (balance < products[index].price) {
@@ -451,19 +449,16 @@ public:
             GPIO::activateOutput(index + 1);
         }
     }
-
     // Function to simulate inserting money
     void insertMoney(double &balance, double amount) {
         balance += amount;
         cout << "Current balance: $" << fixed << setprecision(2) << balance << endl;
     }
-
-    // Function to simulate checking if a button is pressed (for GPIO simulation)
+  // Function to simulate checking if a button is pressed (for GPIO simulation)
     bool isButtonPressed() {
         return GPIO::isButtonPressed();  // Simulate button press
     }
 };
-
 int main() {
     VendingMachine vendingMachine;
     double balance = 0.0;
@@ -480,7 +475,6 @@ int main() {
 
         int choice;
         cin >> choice;
-
         switch (choice) {
             case 1:
                 vendingMachine.displayProducts();
@@ -503,7 +497,6 @@ int main() {
             default:
                 cout << "Invalid choice. Please try again." << endl;
         }
-
         // Simulate button press check after each operation
         if (vendingMachine.isButtonPressed()) {
             // Simulate vending machine action (e.g., activate an output)
@@ -511,8 +504,7 @@ int main() {
             this_thread::sleep_for(chrono::seconds(1));  // Simulate action delay
         }
     }
-
-    return 0;
+  return 0;
 }
 
 
