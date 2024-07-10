@@ -375,9 +375,9 @@ GND - GND pin
 LED-GPIO pins
 
 PROGRAM 
-#include "stm32f10x.h" // Include the STM32F10x standard peripheral library
-#include <stdio.h>
-#include <stdbool.h>
+#include "stm32f10x.h" // Include the STM32F10x standard peripheral library      
+#include <stdio.h>      
+#include <stdbool.h>    
 
 // Define states
 typedef enum {
