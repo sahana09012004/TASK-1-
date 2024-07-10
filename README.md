@@ -353,6 +353,169 @@ OUTPUT
 ![image](https://github.com/sahana09012004/TASK-1-/assets/150324046/baf78d7f-735d-42e3-a38f-b9754e382ed8)
 
 
+TASK 6 
+Using the VSDsquadron mini board, the Vending Machine project simulates the operation of vending machines. LEDs are used to show the machine's various states and operations, and push buttons are used to input coins of various denominations into this system. The project manages the coin inputs and provides change in accordance by implementing a state machine in C, making it an interactive and educational project for learning embedded systems and state machine design.
+
+COMPONENTS FOR VENDING MACHINE 
+1.VSDsquadron Mini Board
+2.Buttons
+3.LEDs
+4.Breadboard
+5.Connecting Wires
+6.Coin dispenser module
+Corresponding Pins 
+VCC- 5V pin 
+GND - GND pin 
+LED-GPIO pins
+
+PROGRAM 
+#include <iostream>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <chrono>
+#include <thread>
+
+using namespace std;
+
+// Simulated GPIO Pins (for demonstration purposes)
+class GPIO {
+public:
+    static bool isButtonPressed() {
+        // Simulate button press
+        return true;  // Change this based on actual GPIO simulation
+    }
+
+    static void activateOutput(int pin) {
+        // Simulate activating an output
+        cout << "Output activated on pin " << pin << endl;
+    }
+};
+
+// Product struct to hold information about each product
+struct Product {
+    string name;
+    double price;
+    int quantity;
+};
+
+// VendingMachine class to manage the vending machine operations
+class VendingMachine {
+private:
+    vector<Product> products; // Vector to store products
+
+public:
+    // Constructor to initialize the vending machine with products
+    VendingMachine() {
+        // Initialize products (name, price, quantity)
+        products = {
+            {"Cola", 1.50, 10},
+            {"Chips", 1.00, 20},
+            {"Candy", 0.75, 30},
+            {"Water", 1.25, 15}
+            // Add more products as needed
+        };
+    }
+
+    // Function to display the products available
+    void displayProducts() {
+        cout << "===== Available Products =====" << endl;
+        cout << "No.  Name         Price  Quantity" << endl;
+        for (int i = 0; i < products.size(); ++i) {
+            cout << setw(3) << (i + 1) << ".  ";
+            cout << setw(12) << products[i].name << "  ";
+            cout << setw(5) << fixed << setprecision(2) << products[i].price << "  ";
+            cout << setw(8) << products[i].quantity << endl;
+        }
+        cout << endl;
+    }
+
+    // Function to process a purchase
+    void purchaseProduct(int choice, double &balance) {
+        if (choice < 1 || choice > products.size()) {
+            cout << "Invalid selection. Please try again." << endl;
+            return;
+        }
+
+        int index = choice - 1;
+        if (products[index].quantity <= 0) {
+            cout << "Sorry, " << products[index].name << " is out of stock." << endl;
+        } else if (balance < products[index].price) {
+            cout << "Insufficient funds. Please insert more money." << endl;
+        } else {
+            balance -= products[index].price;
+            products[index].quantity--;
+            cout << "Enjoy your " << products[index].name << "! Remaining balance: $" << fixed << setprecision(2) << balance << endl;
+
+            // Simulate dispensing product (activate GPIO output)
+            GPIO::activateOutput(index + 1);
+        }
+    }
+
+    // Function to simulate inserting money
+    void insertMoney(double &balance, double amount) {
+        balance += amount;
+        cout << "Current balance: $" << fixed << setprecision(2) << balance << endl;
+    }
+
+    // Function to simulate checking if a button is pressed (for GPIO simulation)
+    bool isButtonPressed() {
+        return GPIO::isButtonPressed();  // Simulate button press
+    }
+};
+
+int main() {
+    VendingMachine vendingMachine;
+    double balance = 0.0;
+
+    cout << "Welcome to the Vending Machine!" << endl;
+    while (true) {
+        cout << "=============================" << endl;
+        cout << "1. Display Products" << endl;
+        cout << "2. Insert Money" << endl;
+        cout << "3. Purchase Product" << endl;
+        cout << "4. Exit" << endl;
+        cout << "=============================" << endl;
+        cout << "Enter your choice: ";
+
+        int choice;
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                vendingMachine.displayProducts();
+                break;
+            case 2:
+                double amount;
+                cout << "Enter the amount to insert: $";
+                cin >> amount;
+                vendingMachine.insertMoney(balance, amount);
+                break;
+            case 3:
+                int productChoice;
+                cout << "Enter the product number to purchase: ";
+                cin >> productChoice;
+                vendingMachine.purchaseProduct(productChoice, balance);
+                break;
+            case 4:
+                cout << "Thank you for using the Vending Machine. Goodbye!" << endl;
+                return 0;
+            default:
+                cout << "Invalid choice. Please try again." << endl;
+        }
+
+        // Simulate button press check after each operation
+        if (vendingMachine.isButtonPressed()) {
+            // Simulate vending machine action (e.g., activate an output)
+            cout << "Button pressed! Activating vending action..." << endl;
+            this_thread::sleep_for(chrono::seconds(1));  // Simulate action delay
+        }
+    }
+
+    return 0;
+}
+
+
    
 
 
