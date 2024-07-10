@@ -375,12 +375,7 @@ GND - GND pin
 LED-GPIO pins
 
 PROGRAM 
-#include <iostream>
-#include <iomanip>
-#include <vector>
-#include <string>
-#include <chrono>
-#include <thread>
+#include <iostream>  
 using namespace std;
 // Simulated GPIO Pins (for demonstration purposes)
 class GPIO {
