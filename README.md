@@ -375,135 +375,131 @@ GND - GND pin
 LED-GPIO pins
 
 PROGRAM 
-#include <iostream>  
-using namespace std;
-// Simulated GPIO Pins (for demonstration purposes)
-class GPIO {
-public:
-    static bool isButtonPressed() {
-        // Simulate button press
-        return true;  // Change this based on actual GPIO simulation
-    }
+#include "stm32f10x.h" // Include the STM32F10x standard peripheral library
+#include <stdio.h>
+#include <stdbool.h>
 
-    static void activateOutput(int pin) {
-        // Simulate activating an output
-        cout << "Output activated on pin " << pin << endl;
-    }
-};
-// Product struct to hold information about each product
-struct Product {
-    string name;
-    double price;
-    int quantity;
-};
-// VendingMachine class to manage the vending machine operations
-class VendingMachine {
-private:
-    vector<Product> products; // Vector to store products
-public:
-    // Constructor to initialize the vending machine with products
-    VendingMachine() {
-        // Initialize products (name, price, quantity)
-        products = {
-            {"Cola", 1.50, 10},
-            {"Chips", 1.00, 20},
-            {"Candy", 0.75, 30},
-            {"Water", 1.25, 15}
-            // Add more products as needed
-        };
-    }
-  // Function to display the products available
-    void displayProducts() {
-        cout << "===== Available Products =====" << endl;
-        cout << "No.  Name         Price  Quantity" << endl;
-        for (int i = 0; i < products.size(); ++i) {
-            cout << setw(3) << (i + 1) << ".  ";
-            cout << setw(12) << products[i].name << "  ";
-            cout << setw(5) << fixed << setprecision(2) << products[i].price << "  ";
-            cout << setw(8) << products[i].quantity << endl;
-        }
-        cout << endl;
-    }
-    // Function to process a purchase
-    void purchaseProduct(int choice, double &balance) {
-        if (choice < 1 || choice > products.size()) {
-            cout << "Invalid selection. Please try again." << endl;
-            return;
-        }
-       int index = choice - 1;
-        if (products[index].quantity <= 0) {
-            cout << "Sorry, " << products[index].name << " is out of stock." << endl;
-        } else if (balance < products[index].price) {
-            cout << "Insufficient funds. Please insert more money." << endl;
-        } else {
-            balance -= products[index].price;
-            products[index].quantity--;
-            cout << "Enjoy your " << products[index].name << "! Remaining balance: $" << fixed << setprecision(2) << balance << endl;
+// Define states
+typedef enum {
+    S0,  // Initial state
+    S5,  // State after 5 cents coin inserted
+    S10, // State after 10 cents coin inserted
+    S20, // State after 20 cents coin inserted
+    S50  // State after 50 cents coin inserted
+} State;
 
-            // Simulate dispensing product (activate GPIO output)
-            GPIO::activateOutput(index + 1);
-        }
-    }
-    // Function to simulate inserting money
-    void insertMoney(double &balance, double amount) {
-        balance += amount;
-        cout << "Current balance: $" << fixed << setprecision(2) << balance << endl;
-    }
-  // Function to simulate checking if a button is pressed (for GPIO simulation)
-    bool isButtonPressed() {
-        return GPIO::isButtonPressed();  // Simulate button press
-    }
-};
-int main() {
-    VendingMachine vendingMachine;
-    double balance = 0.0;
+// Function prototypes
+void vending_machine(State *state, int coin, bool *nw_pa, bool *ret5, bool *ret10, bool *ret20);
+void GPIO_Config(void);
+int read_coin(void);
+void update_outputs(bool nw_pa, bool ret5, bool ret10, bool ret20);
 
-    cout << "Welcome to the Vending Machine!" << endl;
-    while (true) {
-        cout << "=============================" << endl;
-        cout << "1. Display Products" << endl;
-        cout << "2. Insert Money" << endl;
-        cout << "3. Purchase Product" << endl;
-        cout << "4. Exit" << endl;
-        cout << "=============================" << endl;
-        cout << "Enter your choice: ";
+// Function to handle state transitions and actions
+void vending_machine(State *state, int coin, bool *nw_pa, bool *ret5, bool *ret10, bool *ret20) {
+    *nw_pa = false;
+    *ret5 = false;
+    *ret10 = false;
+    *ret20 = false;
 
-        int choice;
-        cin >> choice;
-        switch (choice) {
-            case 1:
-                vendingMachine.displayProducts();
-                break;
-            case 2:
-                double amount;
-                cout << "Enter the amount to insert: $";
-                cin >> amount;
-                vendingMachine.insertMoney(balance, amount);
-                break;
-            case 3:
-                int productChoice;
-                cout << "Enter the product number to purchase: ";
-                cin >> productChoice;
-                vendingMachine.purchaseProduct(productChoice, balance);
-                break;
-            case 4:
-                cout << "Thank you for using the Vending Machine. Goodbye!" << endl;
-                return 0;
-            default:
-                cout << "Invalid choice. Please try again." << endl;
-        }
-        // Simulate button press check after each operation
-        if (vendingMachine.isButtonPressed()) {
-            // Simulate vending machine action (e.g., activate an output)
-            cout << "Button pressed! Activating vending action..." << endl;
-            this_thread::sleep_for(chrono::seconds(1));  // Simulate action delay
-        }
+    switch (*state) {
+        case S0:
+            if (coin == 1) *state = S5;
+            else if (coin == 2) *state = S10;
+            else if (coin == 3) *state = S20;
+            else if (coin == 4) *state = S50;
+            break;
+        case S5:
+            *nw_pa = true;
+            if (coin >= 2) *ret5 = true;
+            if (coin >= 3) *ret10 = true;
+            if (coin == 4) *ret20 = true;
+            break;
+        case S10:
+            *nw_pa = true;
+            if (coin >= 3) *ret10 = true;
+            if (coin == 4) *ret20 = true;
+            break;
+        case S20:
+            *nw_pa = true;
+            if (coin == 4) *ret20 = true;
+            break;
+        case S50:
+            *nw_pa = true;
+            break;
+        default:
+            *state = S0;
+            break;
     }
-  return 0;
 }
 
+// Configure GPIO pins for input (coin buttons) and output (indicators)
+void GPIO_Config(void) {
+    GPIO_InitTypeDef GPIO_InitStructure;
 
-   
+    // Enable clock for Port D
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);
 
+    // Configure GPIOs for input (coin buttons)
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; // Input with pull-up
+    GPIO_Init(GPIOD, &GPIO_InitStructure);
 
+    // Configure GPIOs for output (indicators)
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; // Push-pull output
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_Init(GPIOD, &GPIO_InitStructure);
+}
 
+// Read the coin inserted (1, 2, 3, or 4 for 5c, 10c, 20c, 50c)
+int read_coin(void) {
+    if (!GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_3)) return 1;
+    if (!GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_4)) return 2;
+    if (!GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_5)) return 3;
+    if (!GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_6)) return 4;
+    return 0;
+}
+
+// Update GPIO outputs based on vending machine state
+void update_outputs(bool nw_pa, bool ret5, bool ret10, bool ret20) {
+    if (nw_pa) {
+        GPIO_SetBits(GPIOD, GPIO_Pin_0); // Set NW_PA output pin
+    } else {
+        GPIO_ResetBits(GPIOD, GPIO_Pin_0); // Reset NW_PA output pin
+    }
+
+    if (ret5) {
+        GPIO_SetBits(GPIOD, GPIO_Pin_1); // Set RET_5 output pin
+    } else {
+        GPIO_ResetBits(GPIOD, GPIO_Pin_1); // Reset RET_5 output pin
+    }
+
+    if (ret10) {
+        GPIO_SetBits(GPIOD, GPIO_Pin_2); // Set RET_10 output pin
+    } else {
+        GPIO_ResetBits(GPIOD, GPIO_Pin_2); // Reset RET_10 output pin
+    }
+}
+
+int main(void) {
+    State state = S0;
+    bool nw_pa = false, ret5 = false, ret10 = false, ret20 = false;
+    int coin;
+
+    // Initialize GPIO and configure peripherals
+    GPIO_Config();
+
+    while (1) {
+        coin = read_coin();
+
+        if (coin != 0) {
+            vending_machine(&state, coin, &nw_pa, &ret5, &ret10, &ret20);
+            update_outputs(nw_pa, ret5, ret10, ret20);
+            
+            // Delay to debounce and ensure stable button readings
+            for (int i = 0; i < 100000; ++i) {
+                __NOP();
+            }
+        }
+    }
+}
