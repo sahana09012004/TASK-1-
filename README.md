@@ -379,127 +379,127 @@ PROGRAM
 #include <stdio.h>      
 #include <stdbool.h>    
 
-// Define states
-typedef enum {
+// Define states    
+typedef enum {    
     S0,  // Initial state
-    S5,  // State after 5 cents coin inserted
-    S10, // State after 10 cents coin inserted
-    S20, // State after 20 cents coin inserted
-    S50  // State after 50 cents coin inserted
-} State;
+    S5,  // State after 5 cents coin inserted    
+    S10, // State after 10 cents coin inserted    
+    S20, // State after 20 cents coin inserted    
+    S50  // State after 50 cents coin inserted    
+} State;    
 
-// Function prototypes
-void vending_machine(State *state, int coin, bool *nw_pa, bool *ret5, bool *ret10, bool *ret20);
-void GPIO_Config(void);
-int read_coin(void);
-void update_outputs(bool nw_pa, bool ret5, bool ret10, bool ret20);
+// Function prototypes    
+void vending_machine(State *state, int coin, bool *nw_pa, bool *ret5, bool *ret10, bool *ret20);    
+void GPIO_Config(void);    
+int read_coin(void);    
+void update_outputs(bool nw_pa, bool ret5, bool ret10, bool ret20);    
 
-// Function to handle state transitions and actions
-void vending_machine(State *state, int coin, bool *nw_pa, bool *ret5, bool *ret10, bool *ret20) {
+// Function to handle state transitions and actions    
+void vending_machine(State *state, int coin, bool *nw_pa, bool *ret5, bool *ret10, bool *ret20) {    
     *nw_pa = false;
-    *ret5 = false;
-    *ret10 = false;
-    *ret20 = false;
+    *ret5 = false;    
+    *ret10 = false;    
+    *ret20 = false;  
 
-    switch (*state) {
-        case S0:
-            if (coin == 1) *state = S5;
-            else if (coin == 2) *state = S10;
-            else if (coin == 3) *state = S20;
-            else if (coin == 4) *state = S50;
+    switch (*state) {    
+        case S0:    
+            if (coin == 1) *state = S5;    
+            else if (coin == 2) *state = S10;    
+            else if (coin == 3) *state = S20;    
+            else if (coin == 4) *state = S50;    
             break;
-        case S5:
-            *nw_pa = true;
-            if (coin >= 2) *ret5 = true;
-            if (coin >= 3) *ret10 = true;
-            if (coin == 4) *ret20 = true;
-            break;
-        case S10:
-            *nw_pa = true;
-            if (coin >= 3) *ret10 = true;
-            if (coin == 4) *ret20 = true;
-            break;
-        case S20:
-            *nw_pa = true;
-            if (coin == 4) *ret20 = true;
-            break;
-        case S50:
-            *nw_pa = true;
-            break;
-        default:
-            *state = S0;
-            break;
+        case S5:    
+            *nw_pa = true;    
+            if (coin >= 2) *ret5 = true;    
+            if (coin >= 3) *ret10 = true;    
+            if (coin == 4) *ret20 = true;    
+            break;    
+        case S10:    
+            *nw_pa = true;    
+            if (coin >= 3) *ret10 = true;    
+            if (coin == 4) *ret20 = true;    
+            break;    
+        case S20:    
+            *nw_pa = true;    
+            if (coin == 4) *ret20 = true;    
+            break;    
+        case S50:    
+            *nw_pa = true;    
+            break;    
+        default:    
+            *state = S0;    
+            break;    
     }
 }
 
 // Configure GPIO pins for input (coin buttons) and output (indicators)
-void GPIO_Config(void) {
-    GPIO_InitTypeDef GPIO_InitStructure;
+void GPIO_Config(void) {    
+    GPIO_InitTypeDef GPIO_InitStructure;    
 
-    // Enable clock for Port D
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);
+    // Enable clock for Port D    
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);    
 
-    // Configure GPIOs for input (coin buttons)
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6;
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; // Input with pull-up
+    // Configure GPIOs for input (coin buttons)    
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6;    
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; // Input with pull-up    
     GPIO_Init(GPIOD, &GPIO_InitStructure);
 
-    // Configure GPIOs for output (indicators)
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2;
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; // Push-pull output
-    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-    GPIO_Init(GPIOD, &GPIO_InitStructure);
+    // Configure GPIOs for output (indicators)    
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2;    
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; // Push-pull output    
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;    
+    GPIO_Init(GPIOD, &GPIO_InitStructure);    
 }
 
-// Read the coin inserted (1, 2, 3, or 4 for 5c, 10c, 20c, 50c)
-int read_coin(void) {
-    if (!GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_3)) return 1;
-    if (!GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_4)) return 2;
-    if (!GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_5)) return 3;
-    if (!GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_6)) return 4;
-    return 0;
-}
+// Read the coin inserted (1, 2, 3, or 4 for 5c, 10c, 20c, 50c)    
+int read_coin(void) {    
+    if (!GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_3)) return 1;    
+    if (!GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_4)) return 2;    
+    if (!GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_5)) return 3;    
+    if (!GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_6)) return 4;    
+    return 0;    
+}    
+    
+// Update GPIO outputs based on vending machine state    
+void update_outputs(bool nw_pa, bool ret5, bool ret10, bool ret20) {    
+    if (nw_pa) {    
+        GPIO_SetBits(GPIOD, GPIO_Pin_0); // Set NW_PA output pin    
+    } else {    
+        GPIO_ResetBits(GPIOD, GPIO_Pin_0); // Reset NW_PA output pin    
+    }    
 
-// Update GPIO outputs based on vending machine state
-void update_outputs(bool nw_pa, bool ret5, bool ret10, bool ret20) {
-    if (nw_pa) {
-        GPIO_SetBits(GPIOD, GPIO_Pin_0); // Set NW_PA output pin
-    } else {
-        GPIO_ResetBits(GPIOD, GPIO_Pin_0); // Reset NW_PA output pin
-    }
+    if (ret5) {    
+        GPIO_SetBits(GPIOD, GPIO_Pin_1); // Set RET_5 output pin    
+    } else {    
+        GPIO_ResetBits(GPIOD, GPIO_Pin_1); // Reset RET_5 output pin    
+    }    
 
-    if (ret5) {
-        GPIO_SetBits(GPIOD, GPIO_Pin_1); // Set RET_5 output pin
-    } else {
-        GPIO_ResetBits(GPIOD, GPIO_Pin_1); // Reset RET_5 output pin
-    }
+    if (ret10) {    
+        GPIO_SetBits(GPIOD, GPIO_Pin_2); // Set RET_10 output pin    
+    } else {    
+        GPIO_ResetBits(GPIOD, GPIO_Pin_2); // Reset RET_10 output pin    
+    }    
+}    
 
-    if (ret10) {
-        GPIO_SetBits(GPIOD, GPIO_Pin_2); // Set RET_10 output pin
-    } else {
-        GPIO_ResetBits(GPIOD, GPIO_Pin_2); // Reset RET_10 output pin
-    }
-}
+int main(void) {    
+    State state = S0;    
+    bool nw_pa = false, ret5 = false, ret10 = false, ret20 = false;    
+    int coin;    
 
-int main(void) {
-    State state = S0;
-    bool nw_pa = false, ret5 = false, ret10 = false, ret20 = false;
-    int coin;
+    // Initialize GPIO and configure peripherals    
+    GPIO_Config();    
 
-    // Initialize GPIO and configure peripherals
-    GPIO_Config();
+    while (1) {    
+        coin = read_coin();    
 
-    while (1) {
-        coin = read_coin();
-
-        if (coin != 0) {
-            vending_machine(&state, coin, &nw_pa, &ret5, &ret10, &ret20);
-            update_outputs(nw_pa, ret5, ret10, ret20);
+        if (coin != 0) {    
+            vending_machine(&state, coin, &nw_pa, &ret5, &ret10, &ret20);    
+            update_outputs(nw_pa, ret5, ret10, ret20);    
             
-            // Delay to debounce and ensure stable button readings
-            for (int i = 0; i < 100000; ++i) {
-                __NOP();
-            }
-        }
-    }
-}
+            // Delay to debounce and ensure stable button readings    
+            for (int i = 0; i < 100000; ++i) {    
+                __NOP();    
+            }      
+        }    
+    }    
+}    
