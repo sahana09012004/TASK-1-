@@ -1,4 +1,5 @@
-TASK 1 
+<details>
+  <summary>TASK 1</summary>
 The First task was to install the necessary softwares like virtual box , Risc-v tool and run a C program that counts 1 to N 
 insttaling virtual box
 ![image](https://github.com/sahana09012004/TASK-1-/assets/150324046/80faafdc-45e1-4534-816b-0f105889e7eb)
@@ -7,8 +8,12 @@ Installing Ubuntu
 C Code and output 
 ![image](https://github.com/sahana09012004/TASK-1-/assets/150324046/a02725f3-4de9-489c-a951-284bc18fcffa)
 ![image](https://github.com/sahana09012004/TASK-1-/assets/150324046/aa608163-ab2f-4ab8-9500-af0936fc68b4)
-TASK 2 
+</details>
+<details>
+  <summary>TASK 2</summary>
 The provided C program is a simple implementation of an Automated  Vending Machine with change . The program offers the different juices and balance .
+
+  ```
 #include <stdio.h>
 
 int main() {
@@ -64,10 +69,12 @@ int main() {
 
   return 0;
 }
+```
 CODE BREAK DOWN 
 
 
 Main function 
+```
 int main() {
   // Define drink prices (adjust as needed)
   float coke_price = 1.00;
@@ -79,12 +86,14 @@ int main() {
 
   // Welcome message
   printf("Welcome to the Vending Machine!\n");
+```
 LOOP FUNCTION 
+```
  while (inserted_money < (choice == 1 ? coke_price : juice_price)) {
           printf("Insert money (minimum $%.2f): ", (choice == 1 ? coke_price : juice_price) - inserted_money);
           scanf("%d", &inserted_money);
         }
-
+```
         
         CODE IN LEAFPAD 
 ![c program in leafpad](https://github.com/sahana09012004/TASK-1-/assets/150324046/80828039-3426-4e9e-bd41-62d0f498ca2f)
@@ -92,8 +101,9 @@ LOOP FUNCTION
 
 ![image](https://github.com/sahana09012004/TASK-1-/assets/150324046/9d589350-c651-4d7a-b5be-fef8af054cd2)
 
-
-TASK 3 
+</details>
+<details>
+  <summary>TASK 3</summary>
 Verification with Optimization Levels:
 
 Verify the program's behavior with two different levels of optimization:
@@ -118,15 +128,16 @@ debug command riscv64-unknown-elf-objdump -d ticketterminal.o |less
 
 Hence the output in both spike and RISC-V is verfied.
 
-
-
-
-TASK 4 
+</details>
+<details>
+  <summary>TASK 4</summary>
 Identify various RISC-V instruction type (R, I, S, B, U, J) and exact 32-bit instruction code in the instruction type format for below RISC-V instructions.
 
 
 INSTRUCTIONS:
-     ADD r1, r2, r3
+
+```
+ADD r1, r2, r3
      
      SUB r3, r1, r2
      AND r2, r1, r3
@@ -140,6 +151,9 @@ INSTRUCTIONS:
      BEQ r0, r0, 15
      LW r13, r11, 2
      SLL r15, r11, r2
+
+```
+
 Upload the 32-bit pattern on Github.
 
 RISC-V is an open standard Instruction Set Architecture (ISA) that uses a modular design, allowing for a simple and scalable instruction set. Here are the main instruction types in RISC-V:
@@ -297,7 +311,8 @@ SW r3, r1, 4
   
   
   32-bit binary patterns:
-  ADD  r1, r2, r3_: 00000000001100010000000010110011.
+
+ADD  r1, r2, r3_: 00000000001100010000000010110011.
 
     SUB  r3, r1, r2_: 01000000001000001000000110110011.
 
@@ -324,8 +339,10 @@ SW r3, r1, 4
   SLL  r15, r11, r2_: 00000000001001011000001111010011.
   
 These binary patterns represent the 32-bit encoded instructions for each of the specified RISC-V instructions.
+</details>
 
-TASK 5 
+<details>
+  <summary>TASK 5</summary>
 RISC-V Core Verilog netlist and Testbench for Functional simulation
 I have developed a set of commands and achieved the desired output for my project. This was accomplished by referece above and the key sources, which provided valuable guidance and examples. These references were in understanding the required techniques and applying them effectively in my implementation.
 In this task we will obtain the waveform for RISC-V using Verilog Code and Verilog Testbench
@@ -352,11 +369,13 @@ OUTPUT
 8.GTKWAVE WINDOW
 ![image](https://github.com/sahana09012004/TASK-1-/assets/150324046/baf78d7f-735d-42e3-a38f-b9754e382ed8)
 
-
-TASK 6 
+</details>
+<details>
+  <summary>TASK 6</summary>
 Using the VSDsquadron mini board, the Vending Machine project simulates the operation of vending machines. LEDs are used to show the machine's various states and operations, and push buttons are used to input coins of various denominations into this system. The project manages the coin inputs and provides change in accordance by implementing a state machine in C, making it an interactive and educational project for learning embedded systems and state machine design.
 
-COMPONENTS FOR VENDING MACHINE 
+<br><em>COMPONENTS FOR VENDING MACHINE </em>
+
 1.VSDsquadron Mini Board
 
 2.Buttons
@@ -375,7 +394,8 @@ GND - GND pin
 LED-GPIO pins
 
 PROGRAM 
-#include "stm32f10x.h" // Include the STM32F10x standard peripheral library      
+
+```#include "stm32f10x.h" // Include the STM32F10x standard peripheral library      
 #include <stdio.h>      
 #include <stdbool.h>    
 
@@ -502,4 +522,6 @@ int main(void) {
             }      
         }    
     }    
-}    
+}
+```  
+</details>
