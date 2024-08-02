@@ -395,7 +395,8 @@ LED-GPIO pins
 
 PROGRAM 
 
-```#include "stm32f10x.h" // Include the STM32F10x standard peripheral library      
+```
+#include "stm32f10x.h" // Include the STM32F10x standard peripheral library      
 #include <stdio.h>      
 #include <stdbool.h>    
 
@@ -523,9 +524,12 @@ int main(void) {
         }    
     }    
 }
+
 ```  
 </details>
-PIN DIAGRAM
+
+## PIN DIAGRAM
+
 ```
 -------------------------------------------
 | Pin | Function             | Connection  |
