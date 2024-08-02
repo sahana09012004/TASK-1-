@@ -525,5 +525,37 @@ int main(void) {
 }
 ```  
 </details>
+PIN DIAGRAM
+```
+-------------------------------------------
+| Pin | Function             | Connection  |
+-------------------------------------------
+| VCC | Power Supply         | 5V          |
+| GND | Ground               | Ground      |
+| D0  | Motor 1 Control      | Motor Driver|
+| D1  | Motor 2 Control      | Motor Driver|
+| D2  | Motor 3 Control      | Motor Driver|
+| D3  | Motor 4 Control      | Motor Driver|
+| D4  | Coin Acceptor Signal | Coin Acceptor|
+| D5  | Bill Acceptor Signal | Bill Acceptor|
+| D6  | Product Sensor 1     | Sensor      |
+| D7  | Product Sensor 2     | Sensor      |
+| D8  | Product Sensor 3     | Sensor      |
+| D9  | Product Sensor 4     | Sensor      |
+| D10 | Keypad Row 1         | Keypad      |
+| D11 | Keypad Row 2         | Keypad      |
+| D12 | Keypad Row 3         | Keypad      |
+| D13 | Keypad Row 4         | Keypad      |
+| TX  | Transmit Pin         | Serial Device|
+| RX  | Receive Pin          | Serial Device|
+| SDA | I2C Data Pin         | I2C Device  |
+| SCL | I2C Clock Pin        | I2C Device  |
+| A0  | Display Control 1    | Display     |
+| A1  | Display Control 2    | Display     |
+| A2  | Display Control 3    | Display     |
+| A3  | Display Control 4    | Display     |
+| PWM1| PWM Pin 1            | Motor Driver|
+| PWM2| PWM Pin 2            | Motor Driver|
+```  
 PROJECT DEMONSTRATION :
 https://drive.google.com/file/d/1eSQ_JeUjuP-3Olc6P18xBKogo6NMC45I/view?usp=drivesdk
