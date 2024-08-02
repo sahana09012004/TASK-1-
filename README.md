@@ -556,6 +556,7 @@ PIN DIAGRAM
 | A3  | Display Control 4    | Display     |
 | PWM1| PWM Pin 1            | Motor Driver|
 | PWM2| PWM Pin 2            | Motor Driver|
+
 ```  
 PROJECT DEMONSTRATION :
 https://drive.google.com/file/d/1eSQ_JeUjuP-3Olc6P18xBKogo6NMC45I/view?usp=drivesdk
